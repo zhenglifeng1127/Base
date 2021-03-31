@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Base</string>
+    <string name="netError">没有网络，无心工作，请检查网络重新再来一次吧！</string>
+</resources>

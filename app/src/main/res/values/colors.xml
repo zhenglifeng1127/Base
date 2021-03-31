@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transport">#00000000</color>
+    <color name="transport80">#80000000</color>
+    <!--    一级文本-->
+    <color name="tc1">#303133</color>
+    <!--    二级文本-->
+    <color name="tc2">#ff606266</color>
+    <!--    三级文本-->
+    <color name="tc3">#ff909399</color>
+
+    <!--    标签颜色-->
+    <color name="org">#ffA127</color>
+    <!--    价格颜色-->
+    <color name="price">#FF3E3E</color>
+    <!--    主色-->
+    <color name="mainColor">#4A94FE</color>
+    <!--    主色-->
+    <color name="mainColor50">#8045B1FF</color>
+    <!--    标签颜色-->
+    <color name="tagBlue">#fff0f5ff</color>
+    <!--    提示文字-->
+    <color name="tcHint">#BFC2CC</color>
+    <!--    分割线，边框线，灰底按钮-->
+    <color name="border">#EDEFF2</color>
+    <!--    背景色-->
+    <color name="bgColor">#f5f7fa</color>
+
+    <color name="gradient_black_start">#ff13151d</color>
+    <color name="gradient_black_end">#ff3c3f54</color>
+
+    <color name="white_26">#42ffffff</color>
+
+    <color name="green">#23CC0C</color>
+
+    <color name="tc_green">#FF1F8529</color>
+
+    <color name="yellow">#FFDA00</color>
+
+    <color name="tc3_90">#90909399</color>
+    <color name="tc3_60">#60909399</color>
+
+    <color name="sort_checked">#30bdff</color>
+
+    <color name="sort_unchecked">#646464</color>
+
+    <color name="rechargeColor">#E53C3C</color>
+
+    <color name="feeColor">#28D40C</color>
+
+    <color name="couponTop">#FCEBD1</color>
+
+    <color name="couponBottom">#F6E4BC</color>
+
+    <color name="couponTagTop">#DCB78D</color>
+
+    <color name="couponTagBottom">#CDA581</color>
+
+    <color name="couponEnable">#EDEDF2</color>
+
+    <color name="couponText">#C8B796</color>
+
+    <color name="deliveryBlue">#59B2F7</color>
+
+    <color name="deliveryGray">#A0A0A0</color>
+
+    <color name="deliveryLine">#C9C9C9</color>
+
+    <color name="blue3A">#3ab8fd</color>
+
+    <color name="grayCB">#CBCBCB</color>
+</resources>

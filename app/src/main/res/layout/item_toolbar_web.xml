@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transport"
+    android:theme="@style/Theme.Base.AppBarOverlay"
+    app:elevation="1dp">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:background="@color/transport"
+        android:minHeight="@dimen/dp_48"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="@dimen/dp_0"
+        app:popupTheme="@style/Theme.Base.PopupOverlay"
+        app:title="@null">
+        <!--按自己需求修改或者增加基础样式-->
+        <TextView
+            android:id="@+id/toolbarTitle"
+            android:layout_width="@dimen/dp_240"
+            android:layout_height="@dimen/dp_32"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/dp_54"
+            android:drawablePadding="@dimen/dp_11"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingStart="@dimen/dp_30"
+            android:paddingEnd="@dimen/dp_10"
+            android:textSize="@dimen/sp_18" />
+
+    </androidx.appcompat.widget.Toolbar>
+</com.google.android.material.appbar.AppBarLayout>

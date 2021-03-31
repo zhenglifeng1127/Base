@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+
+
+    <declare-styleable name="FlowLayout">
+        <attr name="flowTextColor" format="color" />
+        <attr name="flowTextSize" format="reference" />
+        <attr name="backgroundRes" format="reference" />
+        <attr name="orientationSpace" format="dimension" />
+        <attr name="verticalSpace" format="dimension" />
+        <attr name="orientationPadding" format="dimension" />
+        <attr name="verticalPadding" format="dimension" />
+
+    </declare-styleable>
+
+    <declare-styleable name="CountDownView">
+        <attr name="countStyle" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ExpandView">
+        <attr name="expendMode">
+            <enum name="top" value="0"/>
+            <enum name="left" value="1"/>
+        </attr>
+        <attr name="layoutId" format="reference" />
+    </declare-styleable>
+    
+    <declare-styleable name="CouponView">
+        <attr name="couponStart" format="dimension"/>
+        <attr name="couponTop" format="dimension"/>
+        <attr name="bgColorStart" format="color"/>
+        <attr name="bgColorEnd" format="color"/>
+        <attr name="radius" format="dimension"/>
+        <attr name="cropRadius" format="dimension"/>
+        <attr name="lineHeight" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="DrawLineText">
+        <attr name="lineDirection" format="enum">
+            <enum name="Start" value="0"/>
+            <enum name="End" value="1"/>
+            <enum name="Top" value="2"/>
+            <enum name="Bottom" value="3"/>
+            <enum name="None" value="4"/>
+        </attr>
+        <attr name="drawWidth" format="dimension"/>
+        <attr name="drawCrop" format="dimension"/>
+        <attr name="drawCropDirection" format="enum">
+            <enum name="None" value="0"/>
+            <enum name="Start" value="1"/>
+            <enum name="End" value="2"/>
+        </attr>
+        <attr name="isDash" format="boolean"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="ProgressView">
+        <attr name="progressStatus" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="NumberProgressView">
+        <attr name="numberStatus" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="CornerText">
+        <attr name="bgDrawStyle" format="enum">
+            <enum name="FILL" value="0"/>
+            <enum name="STOKE" value="1"/>
+            <enum name="GRADIENT" value="2"/>
+        </attr>
+        <attr name="cornerTextRadius" format="dimension"/>
+        <attr name="cornerTextBgColor" format="color"/>
+        <attr name="cornerTextBgColorEnd" format="color"/>
+    </declare-styleable>
+</resources>
