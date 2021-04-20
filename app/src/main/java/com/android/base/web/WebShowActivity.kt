@@ -4,39 +4,14 @@ import com.android.base.R
 import com.android.base.config.AppManager
 import com.android.base.config.Constants
 import com.android.base.databinding.ActivityWebShowBinding
-import com.android.base.mvvm.BaseVMActivity
+import com.android.base.mvvm.AppVMActivity
 import com.android.base.utils.getSelfViewModel
 import com.android.base.utils.openNext
 import com.android.base.utils.other.CommonJs
 import com.android.base.utils.other.ToolbarUtils
 import com.android.base.utils.visible
 
-class WebShowActivity : BaseVMActivity<WebShowVM, ActivityWebShowBinding>() {
-
-    override fun initArgs() {
-        intent.extras?.let {
-            val title = it.getString("title","")
-            if(title.isEmpty()){
-                binding.titleView.root.visible(false)
-            }else{
-                ToolbarUtils.Builder().apply {
-                    toolbar = binding.titleView.toolbar
-                    titleView = binding.titleView.toolbarTitle
-                    titleText = title
-                    titleColor = R.color.tc1
-                    icon = R.mipmap.ic_back_black
-                    color = R.color.white
-                }.build()
-            }
-            binding. webView.addJavascriptInterface(CommonJs(),"CommonJS")
-        }
-    }
-
-
-    override fun initData() {
-
-
-    }
+class WebShowActivity : AppVMActivity<ActivityWebShowBinding,WebShowVM>() {
 
 
     companion object{
@@ -64,15 +39,6 @@ class WebShowActivity : BaseVMActivity<WebShowVM, ActivityWebShowBinding>() {
     }
 
 
-
-    override fun bindBody(): Any {
-        return binding.webView
-    }
-
-    override fun bindView(): ActivityWebShowBinding {
-        return ActivityWebShowBinding.inflate(layoutInflater)
-    }
-
     override fun viewModel(): WebShowVM  = getSelfViewModel {
         webUrl.observe(this@WebShowActivity, {
             binding.webView.post {
@@ -91,5 +57,24 @@ class WebShowActivity : BaseVMActivity<WebShowVM, ActivityWebShowBinding>() {
                 )
             }
         })
+    }
+
+    override fun initConfig(bundle: Bundle?) {
+        intent.extras?.let {
+            val title = it.getString("title","")
+            if(title.isEmpty()){
+                binding.titleView.root.visible(false)
+            }else{
+                ToolbarUtils.Builder().apply {
+                    toolbar = binding.titleView.toolbar
+                    titleView = binding.titleView.toolbarTitle
+                    titleText = title
+                    titleColor = R.color.tc1
+                    icon = R.mipmap.ic_back_black
+                    color = R.color.white
+                }.build()
+            }
+            binding. webView.addJavascriptInterface(CommonJs(),"CommonJS")
+        }
     }
 }
