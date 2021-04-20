@@ -4,7 +4,7 @@ buildscript {
         isMain = false // true是Home模块可单独运行
         isBase = false
 
-
+        def camerax_version = "1.0.0-rc03"
         roomVersion = "2.2.5"
         okHttpVersion = '3.9.0'
         domainTestDependencies = [
@@ -57,12 +57,18 @@ buildscript {
                 room:(["androidx.room:room-runtime:$roomVersion","androidx.room:room-ktx:$roomVersion"]),
                 roomForKapt:"androidx.room:room-compiler:$roomVersion",
                 roomTest:"androidx.room:room-testing:$roomVersion",
-                refresh:"com.scwang.smart:refresh-layout-kernel:2.0.3"
+                refresh:"com.scwang.smart:refresh-layout-kernel:2.0.3",
+                arouter:'com.alibaba:arouter-api:1.5.0',
+                arouterkapt:'com.alibaba:arouter-compiler:1.2.2',
+                CameraX:(  ["androidx.camera:camera-core:${camerax_version}","androidx.camera:camera-camera2:${camerax_version}"
+                            ,"androidx.camera:camera-lifecycle:${camerax_version}","androidx.camera:camera-view:1.0.0-alpha22","androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"])
         ]
         appVersion = "1.0.0"
 
+        compileVersion = 30
+        buildVersion = "30.0.3"
         appCode = 1
-        target = 29
-        minVersion = 19
+        target = 30
+        minVersion = 21
     }
 }

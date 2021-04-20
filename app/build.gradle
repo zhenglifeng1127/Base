@@ -3,17 +3,18 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion compileVersion
+    buildToolsVersion buildVersion
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion minVersion
+        targetSdkVersion target
+        versionCode appCode
+        versionName appVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -46,11 +47,19 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "Boolean", "DEBUG_MODE", "false"
         }
         debug {
-
+            buildConfigField "Boolean", "DEBUG_MODE", "true"
         }
     }
+
+    kapt {
+        arguments {
+            arg("AROUTER_MODULE_NAME", project.getName())
+        }
+    }
+
 }
 
 dependencies {
@@ -68,6 +77,10 @@ dependencies {
     api domainTestDependencies.get("dialog")
     api domainTestDependencies.get("loadsir")
     api domainTestDependencies.get("swiperefreshlayout")
+    api domainTestDependencies.get("arouter")
+    kapt domainTestDependencies.get("arouterkapt")
+    api domainTestDependencies.get("hilt")
+    kapt domainTestDependencies.get("hiltForKapt")
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

@@ -4,6 +4,8 @@ import android.graphics.drawable.Drawable
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
+import com.android.base.utils.DrawableType
+import com.android.base.utils.drawable
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 
