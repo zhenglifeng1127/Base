@@ -14,7 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
  */
 @Suppress("UNCHECKED_CAST")
 abstract class BasePageFragment<VB:ViewBinding,VM : BasePageVM<T,*>, P : BaseQuickAdapter<T, *>, T>
-    : BaseParentFragment<VM,VB>() {
+    : BaseVMFragment<VM,VB>() {
 
     private var adapter: P? = null
 
