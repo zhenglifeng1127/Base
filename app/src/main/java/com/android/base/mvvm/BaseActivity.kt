@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
+import com.android.base.config.ActivityConfig
 import com.android.base.config.AppManager
 import com.android.base.utils.hideInput
 import com.android.base.utils.isShouldHideKeyboard
@@ -17,7 +18,7 @@ abstract class BaseActivity<T: ViewBinding>: AppCompatActivity() {
 
     protected lateinit var binding: T
 
-    protected lateinit var config:ActivityConfig
+    protected lateinit var config: ActivityConfig
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +58,7 @@ abstract class BaseActivity<T: ViewBinding>: AppCompatActivity() {
         config = setBuilder()
     }
 
-    protected open fun setBuilder():ActivityConfig = ActivityConfig.Builder(this).build()
+    protected open fun setBuilder(): ActivityConfig = ActivityConfig.Builder(this).build()
 
 
     /**

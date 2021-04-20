@@ -1,4 +1,4 @@
-package com.android.base.mvvm
+package com.android.base.config
 
 import android.app.Activity
 import android.content.pm.ActivityInfo
@@ -9,14 +9,11 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.annotation.ColorRes
 import com.android.base.R
-import com.android.base.loadsir.NetCallback
-import com.android.base.utils.getActiveNetworkInfo
 import com.android.base.utils.getResColor
 import com.android.base.utils.other.AndroidBug54971Workaround
-import com.kingja.loadsir.core.LoadSir
 import org.greenrobot.eventbus.EventBus
 
-class ActivityConfig(val build:Builder) {
+class ActivityConfig(val build: Builder) {
 
 
     init {
@@ -49,7 +46,7 @@ class ActivityConfig(val build:Builder) {
         var IS_NEED_EVENTBUS = false
 
 
-        fun build():ActivityConfig{
+        fun build(): ActivityConfig {
             return ActivityConfig(this)
         }
 
