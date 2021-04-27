@@ -36,6 +36,7 @@ class WebShowActivity : AppVMActivity<ActivityWebShowBinding,WebShowVM>() {
             webView.destroy()
         }
 
+
     }
 
 

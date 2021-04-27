@@ -2,7 +2,8 @@ package com.android.base.mvvm
 
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
+
 import androidx.viewbinding.ViewBinding
 import com.android.base.config.ActivityConfig
 import com.android.base.config.AppManager
@@ -14,7 +15,7 @@ import org.greenrobot.eventbus.EventBus
 import java.lang.reflect.ParameterizedType
 
 @Suppress("UNCHECKED_CAST")
-abstract class BaseActivity<T: ViewBinding>: AppCompatActivity() {
+abstract class BaseActivity<T: ViewBinding>: ComponentActivity() {
 
     protected lateinit var binding: T
 
