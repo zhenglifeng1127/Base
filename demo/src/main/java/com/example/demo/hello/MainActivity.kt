@@ -1,4 +1,4 @@
-package com.example.demo
+package com.example.demo.hello
 
 import android.os.Bundle
 import com.android.base.mvvm.BaseActivity

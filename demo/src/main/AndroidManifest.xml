@@ -3,14 +3,21 @@
     package="com.example.demo">
 
     <application
+        android:name="com.android.base.application.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Base">
+        android:theme="@style/Theme.Base.NoActionBar">
         <activity
-            android:name=".MainActivity"
+            android:name=".dialog.DialogActivity"
+            android:exported="true" />
+        <activity
+            android:name=".list.ListTestActivity"
+            android:exported="true" />
+        <activity
+            android:name=".hello.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
