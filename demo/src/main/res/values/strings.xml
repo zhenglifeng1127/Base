@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">demo</string>
+    <string name="home_page">首页</string>
+    <string name="project">应用中心</string>
+    <string name="official_account">热点</string>
+    <string name="mine">我的</string>
 </resources>
