@@ -31,6 +31,12 @@ class ActivityConfig(val build: Builder) {
         }
     }
 
+    fun getTranslucentOpen():Boolean{
+        return !build.IS_NEED_TRANSLUCENT
+    }
+
+
+
     class Builder(val context: Activity){
         //有需要沉浸式
         var IS_NEED_TRANSLUCENT = false

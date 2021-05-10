@@ -12,18 +12,21 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.android.base.application.BaseApplication
+import com.android.base.config.ActivityConfig
+import com.android.base.utils.getScreenHeight
 
 @Preview(showBackground = true)
 @Composable
@@ -41,19 +44,23 @@ fun NormalBar(icon: ImageVector = Icons.Filled.ArrowBack, title: String = "这�
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun LocationBar(icon: ImageVector = Icons.Filled.ArrowDropDown) {
-
-
-    Surface(modifier = Modifier.width(375.dp)) {
-
-        TopAppBar(backgroundColor = Color.White) {
+fun LocationBar(
+    config: ActivityConfig,
+    cityName: MutableState<String>,
+    backgroundColor: Color = Color.White,
+    icon: ImageVector = Icons.Filled.ArrowDropDown
+) {
+    GetAppBar(config = config, color = backgroundColor) {
+        TopAppBar(
+            backgroundColor = backgroundColor,
+            elevation = 0.dp
+        ) {
             ConstraintLayout(modifier = Modifier.fillMaxSize()) {
                 val (locationName, locationIcon, searchBg, msgIcon) = createRefs()
                 Text(
 
-                    text = "温州市鹿城区",
+                    text = cityName.value,
                     color = Color.Black,
                     fontSize = 12.sp,
                     maxLines = 1,
@@ -117,8 +124,8 @@ fun LocationBar(icon: ImageVector = Icons.Filled.ArrowDropDown) {
                 Image(
                     painter = rememberVectorPainter(image = Icons.Filled.Menu),
                     contentDescription = null,
-                    modifier = Modifier.constrainAs(msgIcon){
-                        end.linkTo( parent.end)
+                    modifier = Modifier.constrainAs(msgIcon) {
+                        end.linkTo(parent.end)
                         start.linkTo(searchBg.end)
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)
@@ -127,5 +134,26 @@ fun LocationBar(icon: ImageVector = Icons.Filled.ArrowDropDown) {
             }
         }
     }
+}
 
+
+/**
+ * 沉浸式状态栏处理配合BaseActivity
+ */
+@Composable
+fun GetAppBar(
+    config: ActivityConfig,
+    color: Color = Color.White,
+    content: @Composable() () -> Unit
+) {
+    if (config.getTranslucentOpen()) {
+        Surface(modifier = Modifier.fillMaxWidth(), color = color) {
+            Column {
+                Spacer(modifier = Modifier.height(28.dp))
+                content()
+            }
+        }
+    } else {
+        content()
+    }
 }

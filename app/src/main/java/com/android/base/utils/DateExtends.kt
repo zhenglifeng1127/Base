@@ -3,6 +3,7 @@ package com.android.base.utils
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.abs
 
 /**
@@ -30,6 +31,27 @@ fun Calendar.getDayOfMonth(year: Int, month: Int): Int {
     set(year, month, 0) //输入类型为int类型
     return get(Calendar.DAY_OF_MONTH)
 }
+
+/**
+ * 获取当前日期所在周的天
+ */
+fun Calendar.getWeekOfNow() :MutableList<String>{
+    val list = ArrayList<String>()
+    val start = this.firstDayOfWeek
+    val end = this.getMaximum(Calendar.DAY_OF_WEEK)
+    for (i in start..end) {
+        this.set(Calendar.DAY_OF_WEEK, i)
+        val str = time.toString()
+
+        val dataStr = if (str.subSequence(8, 9) == "0")
+            str.substring(9, 10)
+        else
+            str.substring(8, 10)
+        list.add(dataStr)
+    }
+    return list
+}
+
 
 /**
  * 判断当前是周几
@@ -115,8 +137,8 @@ fun Long.zeroDate(): Long {
 /**
  *计算时间戳的差值
  */
-fun Long.between(cal2: Long, typeCode: DATETIME,isPhp: Boolean = false): Long {
-    var res = abs(if(isPhp)this*1000 else this - cal2)
+fun Long.between(cal2: Long, typeCode: DATETIME, isPhp: Boolean = false): Long {
+    var res = abs(if (isPhp) this * 1000 else this - cal2)
     res /= when (typeCode) {
         DATETIME.DAY -> (24 * 60 * 60 * 1000)
         DATETIME.MINUTE -> (60 * 1000)
@@ -129,7 +151,7 @@ fun Long.between(cal2: Long, typeCode: DATETIME,isPhp: Boolean = false): Long {
 /**
  *计算两个日期的差值
  */
-fun Calendar.between( cal2: Calendar, typeCode: DATETIME): Long {
+fun Calendar.between(cal2: Calendar, typeCode: DATETIME): Long {
     var res = abs(timeInMillis - cal2.timeInMillis)
     res /= when (typeCode) {
         DATETIME.DAY -> (24 * 60 * 60 * 1000)
@@ -160,8 +182,8 @@ fun String.toLongDate(timeStyle: String): Long {
 /**
  * 时间戳转样式字符串
  */
-fun Long.toDate(timeStyle: String,isPhp:Boolean = false): String {
-    val d = Date(if(isPhp)this*1000 else this)
+fun Long.toDate(timeStyle: String, isPhp: Boolean = false): String {
+    val d = Date(if (isPhp) this * 1000 else this)
     val sdf = SimpleDateFormat(timeStyle, Locale.CHINA)
     return sdf.format(d)
 }
