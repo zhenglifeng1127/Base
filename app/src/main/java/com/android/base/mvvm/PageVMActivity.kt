@@ -152,4 +152,6 @@ abstract class PageVMActivity<VB:ViewBinding,VM : BasePageVM<T,*>, P : BaseQuick
 
     }
 
+
+
 }

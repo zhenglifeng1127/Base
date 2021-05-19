@@ -2,6 +2,7 @@ package com.example.demo.hello
 
 import androidx.annotation.StringRes
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -18,6 +19,7 @@ import com.android.base.config.ActivityConfig
 import com.example.demo.R
 import com.example.demo.hello.ui.Index
 
+@ExperimentalFoundationApi
 @ExperimentalAnimationApi
 @Composable
 fun rootSuffer(config:ActivityConfig) {
@@ -52,6 +54,7 @@ fun MySelf(modifier: Modifier) {
 
 }
 
+@ExperimentalFoundationApi
 @ExperimentalAnimationApi
 @Composable
 fun BottomView(config:ActivityConfig) {

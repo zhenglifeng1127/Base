@@ -61,4 +61,8 @@ abstract class AppVMActivity<T:ViewBinding,VM:BaseVM>:BaseActivity<T>() {
         }
     }
 
+    fun getParentVM():VM{
+        return viewModel
+    }
+
 }

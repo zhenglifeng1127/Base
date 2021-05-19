@@ -1,5 +1,6 @@
 package com.example.demo.hello.ui
 
+import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.animation.core.animateIntOffsetAsState
 import androidx.compose.foundation.*
@@ -15,20 +16,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.LayoutModifier
+import androidx.compose.ui.layout.Measurable
+import androidx.compose.ui.layout.MeasureResult
+import androidx.compose.ui.layout.MeasureScope
+import androidx.compose.ui.platform.InspectorInfo
+import androidx.compose.ui.platform.InspectorValueInfo
+import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.*
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.android.base.application.BaseApplication
-import com.android.base.utils.day
-import com.android.base.utils.getWeekOfNow
-import com.android.base.utils.month
-import com.android.base.utils.year
+import com.android.base.utils.*
 import com.example.demo.R
 import java.util.*
 import kotlin.collections.ArrayList
@@ -67,11 +70,11 @@ fun CityCalendar() {
             mutableStateOf(false)
         }
         val task = Timer()
-        task.schedule(object :TimerTask(){
+        task.schedule(object : TimerTask() {
             override fun run() {
                 nextState.value = !nextState.value
             }
-        },1000,2000)
+        }, 1000, 4000)
 
 
         viewData.add(
@@ -175,7 +178,7 @@ fun CityCalendar() {
             )
 
             Button(
-                onClick = {  },
+                onClick = { },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = colorResource(id = R.color.blue3A)
                 ),
@@ -193,6 +196,7 @@ fun CityCalendar() {
                         top.linkTo(parent.top)
                     }
             ) {
+
             }
 
             val offsetX = remember {
@@ -200,42 +204,38 @@ fun CityCalendar() {
             }
             val offset = animateIntOffsetAsState(targetValue = offsetX.value)
 
-            Row(
-                modifier = Modifier
-                    .wrapContentHeight()
-                    .fillMaxWidth()
-                    .padding(end = 40.dp, top = 10.dp)
-                    .constrainAs(dateColumn) {
-                        start.linkTo(parent.start)
-                        top.linkTo(dateText.bottom)
-                    }
-                    .offset { offset.value },
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                viewData.forEach {
-                    WeekItem(
-                        data = it,
-                        offsetX = offsetX,
-                        state = clickState,
-                        clickIndex = clickIndex
-                    )
+            Surface(modifier = Modifier
+                .wrapContentHeight()
+                .fillMaxWidth()
+                .padding(end = 43.dp, top = 10.dp)
+                .constrainAs(dateColumn) {
+                    start.linkTo(parent.start)
+                    top.linkTo(dateText.bottom)
                 }
+                .offsetDp { offset.value }) {
+                WeekItem(
+                    data = viewData,
+                    offsetX = offsetX,
+                    state = clickState,
+                    clickIndex = clickIndex
+                )
             }
+
 
             Surface(
                 modifier = Modifier
                     .wrapContentWidth()
                     .wrapContentHeight()
-                    .padding(end = 40.dp, top = 10.dp, start = 54.dp)
+                    .padding(end = 43.dp, top = 10.dp, start = 46.dp)
                     .constrainAs(activeColumn) {
                         start.linkTo(parent.start)
                         top.linkTo(dateText.bottom)
                     }
                     .clickable(onClick = {
                         clickState.value = false
-                        offsetX.value = IntOffset(0, 0)
                         viewData[clickIndex.value].offsetState.value = false
                         clickIndex.value = -1
+                        offsetX.value = IntOffset(0, 0)
                     })
             ) {
                 AnimatedVisibility(
@@ -288,20 +288,39 @@ fun CityCalendar() {
                     ),
                 color = Color.LightGray
             ) {
+                Box(
+                    contentAlignment = Alignment.CenterStart,
 
-                AnimatedVisibility(
-                    visible = nextState.value,
-                    enter = slideInVertically(initialOffsetY = { it / 2 }) + expandVertically(),
-                    exit = slideOutVertically(targetOffsetY = { -it / 2 }) + fadeOut(),
                 ) {
-                    Box(contentAlignment = Alignment.CenterStart) {
-                        Text(
-                            text = "测试内容",
-                            fontSize = 12.sp,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 10.dp)
-                        )
+                    AnimatedVisibility(
+                        visible = nextState.value,
+                        enter = slideInVertically(initialOffsetY = { it / 2 }) + expandVertically(),
+                        exit = slideOutVertically(targetOffsetY = { -it / 2 }) + fadeOut(),
+                    ) {
+                        Box(contentAlignment = Alignment.CenterStart) {
+                            Text(
+                                text = "测试内容",
+                                fontSize = 12.sp,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 10.dp)
+                            )
+                        }
+                    }
+                    AnimatedVisibility(
+                        visible = !nextState.value,
+                        enter = slideInVertically(initialOffsetY = { it / 2 }) + expandVertically(),
+                        exit = slideOutVertically(targetOffsetY = { -it / 2 }) + fadeOut(),
+                    ) {
+                        Box(contentAlignment = Alignment.CenterStart) {
+                            Text(
+                                text = "测试内容1",
+                                fontSize = 12.sp,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 10.dp)
+                            )
+                        }
                     }
                 }
 
@@ -322,9 +341,13 @@ fun ActiveBody(activeList: MutableList<String>) {
 //        Image(painter =  painterResource(id = R.mipmap.ic_launcher_round),contentDescription = null)
         when (activeList.size) {
             1 -> {
-                Box(contentAlignment = Alignment.CenterStart, modifier = Modifier.weight(1f).clickable(onClick = {
+                Box(
+                    contentAlignment = Alignment.CenterStart, modifier = Modifier
+                        .weight(1f)
+                        .clickable(onClick = {
 
-                })) {
+                        })
+                ) {
                     Text(
                         text = activeList[0],
                         modifier = Modifier.fillMaxWidth(),
@@ -344,9 +367,13 @@ fun ActiveBody(activeList: MutableList<String>) {
 
             }
             else -> {
-                Box(contentAlignment = Alignment.CenterStart, modifier = Modifier.weight(1f).clickable(onClick = {
+                Box(
+                    contentAlignment = Alignment.CenterStart, modifier = Modifier
+                        .weight(1f)
+                        .clickable(onClick = {
 
-                })) {
+                        })
+                ) {
                     Text(
                         text = activeList[0],
                         modifier = Modifier.fillMaxWidth(),
@@ -354,9 +381,13 @@ fun ActiveBody(activeList: MutableList<String>) {
                         overflow = TextOverflow.Ellipsis
                     )
                 }
-                Box(contentAlignment = Alignment.CenterStart, modifier = Modifier.weight(1f).clickable(onClick = {
+                Box(
+                    contentAlignment = Alignment.CenterStart, modifier = Modifier
+                        .weight(1f)
+                        .clickable(onClick = {
 
-                })) {
+                        })
+                ) {
                     Text(
                         text = activeList[1],
                         modifier = Modifier.fillMaxWidth(),
@@ -392,65 +423,80 @@ fun ActiveEmpty() {
 @Composable
 fun WeekItem(
     offsetX: MutableState<IntOffset>,
+    data: MutableList<CityCalendarBean>,
+    clickIndex: MutableState<Int>,
     state: MutableState<Boolean>,
-    data: CityCalendarBean,
-    clickIndex: MutableState<Int>
 ) {
-    val x = if (data.index == 0) {
-        0
-    } else {
-        (46 * data.index) * BaseApplication.mContext.resources.displayMetrics.density + 0.5f
-    }
-    Column(
-        modifier = Modifier
-            .wrapContentWidth()
-            .height(70.dp)
-            .clickable(onClick = {
-                data.offsetState.value = !data.offsetState.value
-                state.value = data.offsetState.value
-                if (data.offsetState.value) {
-                    clickIndex.value = data.index
-                    offsetX.value = IntOffset(-x.toInt(), 0)
+
+    Row {
+
+        data.forEach {
+//            WeekItem(
+//                data = it,
+//                offsetX = offsetX,
+//                state = clickState,
+//                clickIndex = clickIndex
+//            )
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(70.dp)
+                    .clickable(onClick = {
+                        it.offsetState.value = !it.offsetState.value
+                        state.value = it.offsetState.value
+                        if (it.offsetState.value) {
+                            clickIndex.value = it.index
+                            offsetX.value = IntOffset(
+                                if (clickIndex.value == 0 || clickIndex.value == -1) {
+                                    0
+                                } else {
+                                    -46 * clickIndex.value
+                                }, 0
+                            )
+                        } else {
+                            offsetX.value = IntOffset(0, 0)
+                        }
+                    }),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (!it.offsetState.value) {
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(
+                        text = it.weekName,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        fontSize = 12.sp
+                    )
+                    Spacer(modifier = Modifier.height(5.dp))
+                    WeekChildBg(isNow = it.isNow, isActive = it.activeList.size > 0) {
+                        WeekChildItem(
+                            data = it
+                        )
+                    }
                 } else {
-                    offsetX.value = IntOffset(0, 0)
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(
+                        text = "周${it.weekName}",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        fontSize = 12.sp
+                    )
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Text(
+                        text = it.dateName,
+                        modifier = Modifier.width(20.dp),
+                        textAlign = TextAlign.Center,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Blue,
+                        maxLines = 1
+                    )
                 }
-            }),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (!data.offsetState.value) {
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = data.weekName,
-                modifier = Modifier.width(40.dp),
-                textAlign = TextAlign.Center,
-                fontSize = 12.sp
-            )
-            Spacer(modifier = Modifier.height(5.dp))
-            WeekChildBg(isNow = data.isNow, isActive = data.activeList.size > 0) {
-                WeekChildItem(
-                    data = data
-                )
             }
-        } else {
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = "周${data.weekName}",
-                modifier = Modifier.width(40.dp),
-                textAlign = TextAlign.Center,
-                fontSize = 12.sp
-            )
-            Spacer(modifier = Modifier.height(5.dp))
-            Text(
-                text = data.dateName,
-                modifier = Modifier.width(20.dp),
-                textAlign = TextAlign.Center,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Blue,
-                maxLines = 1
-            )
         }
     }
+
+
 }
 
 
@@ -547,3 +593,54 @@ data class CityCalendarBean(
     val activeList: MutableList<String>,
     val offsetState: MutableState<Boolean>
 )
+
+fun Modifier.offsetDp(offset: Density.() -> IntOffset) = this.then(
+
+    OffsetPxModifierDp(
+        offset = offset,
+        rtlAware = true,
+        inspectorInfo = debugInspectorInfo {
+            name = "offset"
+            properties["offset"] = offset
+        }
+    )
+)
+
+
+private class OffsetPxModifierDp(
+    val offset: Density.() -> IntOffset,
+    val rtlAware: Boolean,
+    inspectorInfo: InspectorInfo.() -> Unit
+) : LayoutModifier, InspectorValueInfo(inspectorInfo) {
+    override fun MeasureScope.measure(
+        measurable: Measurable,
+        constraints: Constraints
+    ): MeasureResult {
+
+        val placeable = measurable.measure(constraints)
+        return layout(placeable.width, placeable.height) {
+            val offsetValue = offset()
+            if (rtlAware) {
+                placeable.placeRelativeWithLayer(offsetValue.x.dp.roundToPx(), offsetValue.y)
+            } else {
+                placeable.placeWithLayer(offsetValue.x.dp.roundToPx(), offsetValue.y)
+            }
+        }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        val otherModifier = other as? OffsetPxModifierDp ?: return false
+
+        return offset == otherModifier.offset &&
+                rtlAware == otherModifier.rtlAware
+    }
+
+    override fun hashCode(): Int {
+        var result = offset.hashCode()
+        result = 31 * result + rtlAware.hashCode()
+        return result
+    }
+
+    override fun toString(): String = "OffsetPxModifier(offset=$offset, rtlAware=$rtlAware)"
+}
