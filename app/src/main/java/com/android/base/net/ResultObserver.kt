@@ -108,10 +108,7 @@ abstract class ResultObserver<T> : Observer<ResultBean<T>> {
 
     }
 
-    open fun onError(code: String, msg: String) {
-        L.i(code, msg)
-        //        ToastUtils.showCenterText(msg);
-    }
+    abstract fun onError(code: String, msg: String)
 
     open fun onTokenFail() {
         //token超时具体根据实际CODE

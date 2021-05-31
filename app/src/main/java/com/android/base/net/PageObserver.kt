@@ -122,10 +122,7 @@ abstract class PageObserver<T> : Observer<PageBean<T>> {
 
     }
 
-    open fun onError(code: String, msg: String) {
-        L.i(code, msg)
-
-    }
+    abstract fun onError(code: String, msg: String)
 
     private fun onTokenFail() {
         //token超时具体根据实际CODE

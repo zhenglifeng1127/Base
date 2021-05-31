@@ -16,8 +16,10 @@ import com.android.base.utils.other.StringConverter
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -108,7 +110,7 @@ fun ArrayList<String>?.convert(): MutableList<MultipartBody.Part> {
     this?.let {
         for (text in this) {
             val file = File(text)
-            val body = RequestBody.create(MediaType.parse("image/jpg"), file)
+            val body = file.asRequestBody("image/jpg".toMediaType())
             val part = MultipartBody.Part.createFormData("files", file.name, body)
             list.add(part)
         }
